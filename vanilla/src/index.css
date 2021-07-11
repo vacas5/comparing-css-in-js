@@ -1,0 +1,89 @@
+@import-normalize;
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+html::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  background: repeating-linear-gradient(
+    -55deg,
+    #e3e7f0,
+    #e3e7f0 4px,
+    white 4px,
+    white 12px
+  );
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  color: #666666;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background: #f8f7fc;
+}
+
+.page-header {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  color: white;
+  margin: 16px 0;
+}
+
+.page-subtitle {
+  color: white;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+label {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+input,
+textarea,
+select {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-image: none;
+  background-color: #f6f6f6;
+  box-shadow: 0px 0px 2px #ddd;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 4px 8px;
+  box-sizing: border-box;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #777;
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding: 64px 0;
+  }
+}
