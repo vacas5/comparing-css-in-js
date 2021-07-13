@@ -44,20 +44,6 @@
   max-width: 540px;
 }
 
-.responsive-field-wrapper {
-  margin-top: 16px;
-}
-
-.responsive-field-wrapper label {
-  display: block;
-}
-
-.responsive-field-wrapper .control {
-  margin-top: 8px;
-  display: block;
-  width: 100%;
-}
-
 .submit-button-wrapper {
   text-align: right;
   margin-top: 24px;
@@ -76,16 +62,5 @@
 @media (min-width: 640px) {
   .button-list {
     flex-direction: row;
-  }
-
-  .responsive-field-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  .responsive-field-wrapper .control {
-    margin: 0 0 0 24px;
-    width: 75%;
   }
 }

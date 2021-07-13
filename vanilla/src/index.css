@@ -56,11 +56,20 @@ button {
   background: transparent;
   color: inherit;
   font: inherit;
+  cursor: pointer;
+}
+
+button:hover,
+button:active,
+button:focus {
+  opacity: 0.8;
 }
 
 label {
   font-weight: 700;
   font-size: 14px;
+  padding: 5px 0;
+  line-height: 19px;
 }
 
 input,
