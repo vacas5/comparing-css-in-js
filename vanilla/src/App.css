@@ -24,6 +24,7 @@
   background: white;
   margin: 24px -24px 0;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  min-height: 400px;
 }
 
 .App-footer {
@@ -50,7 +51,7 @@
   .content-wrapper {
     border-radius: 4px;
     overflow: hidden;
-    max-width: 680px;
+    width: 680px;
     margin: 24px auto;
   }
 }

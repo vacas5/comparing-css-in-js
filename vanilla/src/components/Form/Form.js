@@ -1,7 +1,10 @@
-import { Fragment, useState } from "react";
+import { useReducer } from "react";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as Briefcase } from "../../icons/briefcase.svg";
 import { ReactComponent as Users } from "../../icons/users.svg";
 import { ReactComponent as Question } from "../../icons/question.svg";
+import ContentWrapper from "../ContentWrapper/ContentWrapper";
+import ControlWithLabel from "../ControlWithLabel/ControlWithLabel";
 import "./Form.css";
 
 const formTypes = [
@@ -32,6 +35,10 @@ const selectMenuOptions = {
       value: "subscription",
       title: "A widget subscription",
     },
+    {
+      value: "other",
+      title: "Something else",
+    },
   ],
   user: [
     {
@@ -42,16 +49,83 @@ const selectMenuOptions = {
       value: "warranty",
       title: "Question about widget warranty",
     },
+    {
+      value: "other",
+      title: "Something else",
+    },
   ],
 };
 
+const initialState = {
+  formType: "sales",
+  name: "",
+  email: "",
+  phone: "",
+  interest: "",
+  issue: "",
+  message: "",
+  validate: false,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "setFormType":
+      return state.formType !== action.value
+        ? {
+            ...state,
+            formType: action.value,
+            interest: "",
+            issue: "",
+            validate: false,
+          }
+        : state;
+    case "setFieldValue":
+      return {
+        ...state,
+        [action.name]: action.value,
+      };
+    case "toggleValidation":
+      return {
+        ...state,
+        validate: !state.validate,
+      };
+    default:
+      throw new Error();
+  }
+}
+
 function Form() {
-  const [formType, setFormType] = useState("sales");
+  let history = useHistory();
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { formType, name, email, phone, interest, issue, message, validate } =
+    state;
 
   const options = selectMenuOptions[formType] || [];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch({ type: "toggleValidation" });
+
+    let requiredFields = ["name", "email", "message"];
+    if (formType === "sales") {
+      requiredFields.push("interest");
+    } else if (formType === "user") {
+      requiredFields.push("issue");
+    }
+
+    if (requiredFields.every((key) => state[key])) {
+      history.push("/success");
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    dispatch({ type: "setFieldValue", name, value });
+  };
+
   return (
-    <Fragment>
+    <ContentWrapper>
       <nav className="button-nav">
         <ul className="button-list">
           {formTypes.map(({ type, Icon, title }) => {
@@ -65,7 +139,7 @@ function Form() {
                       : "button-list-button"
                   }
                   onClick={() => {
-                    setFormType(type);
+                    dispatch({ type: "setFormType", value: type });
                   }}
                 >
                   <Icon className="button-list-button-icon" />
@@ -76,72 +150,99 @@ function Form() {
           })}
         </ul>
       </nav>
-      <form className="form">
-        <div className="responsive-field-wrapper">
-          <label htmlFor="name">Full Name</label>
+      <form className="form" onSubmit={handleSubmit}>
+        <ControlWithLabel
+          id="name"
+          title="Name"
+          required
+          invalid={validate && !name}
+        >
           <input
             type="text"
-            id="name"
+            name="name"
             placeholder="Jane Doe"
-            className="control"
+            value={name}
+            onChange={handleChange}
           />
-        </div>
-        <div className="responsive-field-wrapper">
-          <label htmlFor="email">Email</label>
+        </ControlWithLabel>
+        <ControlWithLabel
+          id="email"
+          title="Email"
+          required
+          invalid={validate && !email}
+        >
           <input
             type="email"
-            id="email"
+            name="email"
             placeholder="jane.doe@example.com"
-            className="control"
+            value={email}
+            onChange={handleChange}
           />
-        </div>
-        <div className="responsive-field-wrapper">
-          <label htmlFor="phone">Phone</label>
+        </ControlWithLabel>
+        <ControlWithLabel id="phone" title="Phone">
           <input
             type="tel"
-            id="phone"
+            name="phone"
             placeholder="(123) 456-7890"
-            className="control"
+            value={phone}
+            onChange={handleChange}
           />
-        </div>
+        </ControlWithLabel>
         {formType === "sales" && (
-          <div className="responsive-field-wrapper">
-            <label htmlFor="interest">Interest</label>
-            <select id="interest" className="control">
+          <ControlWithLabel
+            id="interest"
+            title="Interest"
+            required
+            invalid={validate && !interest}
+          >
+            <select name="interest" value={interest} onChange={handleChange}>
               <option>I'm interested in...</option>
               {options.map(({ value, title }) => (
-                <option value={value}>{title}</option>
+                <option value={value} key={value}>
+                  {title}
+                </option>
               ))}
             </select>
-          </div>
+          </ControlWithLabel>
         )}
         {formType === "user" && (
-          <div className="responsive-field-wrapper">
-            <label htmlFor="issue">Issue</label>
-            <select id="issue" name="issue" className="control">
+          <ControlWithLabel
+            id="issue"
+            title="Issue"
+            required
+            invalid={validate && !issue}
+          >
+            <select name="issue" value={issue} onChange={handleChange}>
               <option>Select an issue</option>
               {options.map(({ value, title }) => (
-                <option value={value}>{title}</option>
+                <option value={value} key={value}>
+                  {title}
+                </option>
               ))}
             </select>
-          </div>
+          </ControlWithLabel>
         )}
-        <div className="responsive-field-wrapper">
-          <label htmlFor="message">Message</label>
+        <ControlWithLabel
+          id="message"
+          title="Message"
+          required
+          invalid={validate && !message}
+        >
           <textarea
-            id="message"
+            name="message"
             placeholder="Hi! I would like to..."
             rows="8"
-            className="control"
-          ></textarea>
-        </div>
+            value={message}
+            onChange={handleChange}
+          />
+        </ControlWithLabel>
         <p className="submit-button-wrapper">
           <button className="button" type="submit">
             Get in touch
           </button>
         </p>
       </form>
-    </Fragment>
+    </ContentWrapper>
   );
 }
 
