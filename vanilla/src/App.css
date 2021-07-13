@@ -20,13 +20,6 @@
   transform: rotate(-40deg) translate(-208px, -120px);
 }
 
-.content-wrapper {
-  background: white;
-  margin: 24px -24px 0;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  min-height: 400px;
-}
-
 .App-footer {
   font-size: 14px;
   margin-top: 24px;
@@ -46,13 +39,6 @@
 @media (min-width: 768px) {
   .App {
     padding: 24px 48px;
-  }
-
-  .content-wrapper {
-    border-radius: 4px;
-    overflow: hidden;
-    width: 680px;
-    margin: 24px auto;
   }
 }
 

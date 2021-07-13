@@ -18,6 +18,11 @@ function App() {
           <Route path="/success">
             <Success />
           </Route>
+          <Route path="/other">
+            <h2>
+              honestly I don't even want to be bothered trying to style this.
+            </h2>
+          </Route>
         </Switch>
         <footer className="App-footer">
           <h2 className="footer-title">headquarters</h2>
