@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react/macro";
 import { useReducer } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as Briefcase } from "../../icons/briefcase.svg";
@@ -5,7 +7,50 @@ import { ReactComponent as Users } from "../../icons/users.svg";
 import { ReactComponent as Question } from "../../icons/question.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import ControlWithLabel from "../ControlWithLabel/ControlWithLabel";
-import "./Form.css";
+
+const ORANGE = "#e37f3e";
+
+const list = css`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+`;
+
+const listButton = css`
+  height: 40px;
+  vertical-align: middle;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+  border-radius: 4px;
+`;
+
+const form = css`
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 540px;
+`;
+
+const button = css`
+  background: ${ORANGE};
+  color: white;
+  text-transform: uppercase;
+  padding: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 14px;
+`;
 
 const formTypes = [
   {
@@ -126,23 +171,26 @@ function Form() {
 
   return (
     <ContentWrapper>
-      <nav className="button-nav">
-        <ul className="button-list">
+      <nav css={{ backgroundColor: "#f8f6f7" }}>
+        <ul css={list}>
           {formTypes.map(({ type, Icon, title }) => {
+            const listButtonClass = [listButton];
+            if (formType === type) {
+              listButtonClass.push({
+                backgroundColor: "white",
+                color: ORANGE,
+              });
+            }
             return (
-              <li className="button-list-item" key={type}>
+              <li css={{ textAlign: "center", margin: "16px 24px" }} key={type}>
                 <button
                   type="button"
-                  className={
-                    formType === type
-                      ? "button-list-button active"
-                      : "button-list-button"
-                  }
+                  css={listButtonClass}
                   onClick={() => {
                     dispatch({ type: "setFormType", value: type });
                   }}
                 >
-                  <Icon className="button-list-button-icon" />
+                  <Icon css={{ marginRight: "8px" }} />
                   {title}
                 </button>
               </li>
@@ -150,7 +198,7 @@ function Form() {
           })}
         </ul>
       </nav>
-      <form className="form" onSubmit={handleSubmit}>
+      <form css={form} onSubmit={handleSubmit}>
         <ControlWithLabel
           id="name"
           title="Name"
@@ -236,8 +284,8 @@ function Form() {
             onChange={handleChange}
           />
         </ControlWithLabel>
-        <p className="submit-button-wrapper">
-          <button className="button" type="submit">
+        <p css={{ textAlign: "right", marginTop: "24px" }}>
+          <button css={button} type="submit">
             Get in touch
           </button>
         </p>
