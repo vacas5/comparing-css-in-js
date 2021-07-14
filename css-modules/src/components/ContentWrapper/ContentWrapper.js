@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./ContentWrapper.css";
+import styles from "./ContentWrapper.module.css";
 
 ContentWrapper.propTypes = {
   className: PropTypes.string,
@@ -9,7 +9,11 @@ ContentWrapper.propTypes = {
 function ContentWrapper({ className, children }) {
   return (
     <main
-      className={className ? `content-wrapper ${className}` : "content-wrapper"}
+      className={
+        className
+          ? `${styles["content-wrapper"]} ${className}`
+          : styles["content-wrapper"]
+      }
     >
       {children}
     </main>

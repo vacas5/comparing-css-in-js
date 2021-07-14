@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./ControlWithLabel.css";
+import styles from "./ControlWithLabel.module.css";
 
 ControlWithLabel.propTypes = {
   id: PropTypes.string.isRequired,
@@ -11,16 +11,21 @@ ControlWithLabel.propTypes = {
 };
 
 function ControlWithLabel({ id, title, invalid, required, children }) {
-  const className = required && invalid ? "control invalid" : "control";
+  const className =
+    required && invalid
+      ? `${styles.control} ${styles.invalid}`
+      : styles.control;
   return (
-    <div className="responsive-field-wrapper">
+    <div className={styles["responsive-field-wrapper"]}>
       <label htmlFor={id}>
         {title}
-        {required && <span className="required">*</span>}
+        {required && <span className={styles.required}>*</span>}
       </label>
-      <div className="control-wrapper">
+      <div className={styles["control-wrapper"]}>
         {React.cloneElement(children, { id, className })}
-        {required && invalid && <p className="help">{title} is required.</p>}
+        {required && invalid && (
+          <p className={styles.help}>{title} is required.</p>
+        )}
       </div>
     </div>
   );
