@@ -5,7 +5,6 @@ import { ReactComponent as Users } from "../../icons/users.svg";
 import { ReactComponent as Question } from "../../icons/question.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import ControlWithLabel from "../ControlWithLabel/ControlWithLabel";
-import "./Form.css";
 
 const formTypes = [
   {
@@ -242,6 +241,76 @@ function Form() {
           </button>
         </p>
       </form>
+      <style jsx>
+        {`
+          .button-nav {
+            background-color: #f8f6f7;
+          }
+
+          .button-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow: hidden;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+
+          .button-list-item {
+            text-align: center;
+            margin: 16px 24px;
+          }
+
+          .button-list-button {
+            height: 40px;
+            vertical-align: middle;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 16px;
+            border-radius: 4px;
+          }
+
+          .button-list-button.active {
+            background: white;
+            color: #e37f3e;
+          }
+
+          .button-list-button-icon {
+            margin-right: 8px;
+          }
+
+          .form {
+            padding: 24px;
+            margin: 0 auto;
+            max-width: 540px;
+          }
+
+          .submit-button-wrapper {
+            text-align: right;
+            margin-top: 24px;
+          }
+
+          .button {
+            background: #e37f3e;
+            color: white;
+            text-transform: uppercase;
+            padding: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+
+          @media (min-width: 640px) {
+            .button-list {
+              flex-direction: row;
+            }
+          }
+        `}
+      </style>
     </ContentWrapper>
   );
 }
