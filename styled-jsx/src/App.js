@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Form from "./components/Form/Form";
 import Success from "./components/Success/Success";
-import "./App.css";
+import styles from "./App.css?type=scoped";
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
           <address>888.987.8337</address>
         </footer>
       </div>
+      <style jsx>{styles}</style>
     </Router>
   );
 }
