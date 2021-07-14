@@ -5,7 +5,7 @@ import { ReactComponent as Users } from "../../icons/users.svg";
 import { ReactComponent as Question } from "../../icons/question.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import ControlWithLabel from "../ControlWithLabel/ControlWithLabel";
-import "./Form.css";
+import styles from "./Form.module.css";
 
 const formTypes = [
   {
@@ -126,23 +126,23 @@ function Form() {
 
   return (
     <ContentWrapper>
-      <nav className="button-nav">
-        <ul className="button-list">
+      <nav className={styles["button-nav"]}>
+        <ul className={styles["button-list"]}>
           {formTypes.map(({ type, Icon, title }) => {
             return (
-              <li className="button-list-item" key={type}>
+              <li className={styles["button-list-item"]} key={type}>
                 <button
                   type="button"
                   className={
                     formType === type
-                      ? "button-list-button active"
-                      : "button-list-button"
+                      ? `${styles["button-list-button"]} ${styles.active}`
+                      : styles["button-list-button"]
                   }
                   onClick={() => {
                     dispatch({ type: "setFormType", value: type });
                   }}
                 >
-                  <Icon className="button-list-button-icon" />
+                  <Icon className={styles["button-list-button-icon"]} />
                   {title}
                 </button>
               </li>
@@ -150,7 +150,7 @@ function Form() {
           })}
         </ul>
       </nav>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <ControlWithLabel
           id="name"
           title="Name"
@@ -236,8 +236,8 @@ function Form() {
             onChange={handleChange}
           />
         </ControlWithLabel>
-        <p className="submit-button-wrapper">
-          <button className="button" type="submit">
+        <p className={styles["submit-button-wrapper"]}>
+          <button className={styles.button} type="submit">
             Get in touch
           </button>
         </p>
