@@ -1,6 +1,6 @@
 import React from "react";
+import styled from "styled-components/macro";
 import PropTypes from "prop-types";
-import "./ControlWithLabel.css";
 
 ControlWithLabel.propTypes = {
   id: PropTypes.string.isRequired,
@@ -10,19 +10,62 @@ ControlWithLabel.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+const RED = "red";
+
+const Wrapper = styled.div`
+  margin-top: 16px;
+
+  @media (min-width: 640px) {
+    display: flex;
+    justify-content: flex-end;
+  }
+`;
+
+const Label = styled.label`
+  display: block;
+`;
+
+const Asterisk = styled.span`
+  color: ${RED};
+`;
+
+const ControlWrapper = styled.div`
+  margin-top: 4px;
+  display: block;
+  width: 100%;
+
+  input,
+  textarea,
+  select {
+    display: block;
+    width: 100%;
+    border-color: ${(props) => props.invalid && RED};
+  }
+
+  @media (min-width: 640px) {
+    margin: 0 0 0 24px;
+    width: 75%;
+  }
+`;
+
+const Help = styled.p`
+  font-size: 14px;
+  margin: 8px 0 0;
+  color: red;
+`;
+
 function ControlWithLabel({ id, title, invalid, required, children }) {
-  const className = required && invalid ? "control invalid" : "control";
   return (
-    <div className="responsive-field-wrapper">
-      <label htmlFor={id}>
+    <Wrapper>
+      <Label htmlFor={id}>
         {title}
-        {required && <span className="required">*</span>}
-      </label>
-      <div className="control-wrapper">
-        {React.cloneElement(children, { id, className })}
-        {required && invalid && <p className="help">{title} is required.</p>}
-      </div>
-    </div>
+        {required && <Asterisk>*</Asterisk>}
+      </Label>
+      <ControlWrapper invalid={required && invalid}>
+        {React.cloneElement(children, { id })}
+        {required && invalid && <Help>{title} is required.</Help>}
+      </ControlWrapper>
+    </Wrapper>
   );
 }
 

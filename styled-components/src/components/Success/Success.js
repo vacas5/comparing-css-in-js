@@ -1,16 +1,36 @@
 import React from "react";
+import styled from "styled-components/macro";
 import { ReactComponent as Trophy } from "../../icons/trophy.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
-import "./Success.css";
 
-function Success(props) {
+const GREEN = "green";
+
+const SuccessWrapper = styled(ContentWrapper)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Create a Title component that'll render an <h2> tag with some styles
+const Title = styled.h2`
+  color: ${GREEN};
+`;
+
+const Icon = styled(Trophy)`
+  color: ${GREEN};
+  width: 64px;
+  height: 64px;
+`;
+
+function Success() {
   return (
-    <ContentWrapper className="success-wrapper">
-      <h2 className="success-title">Success!</h2>
-      <p className="success-icon">
-        <Trophy />
+    <SuccessWrapper>
+      <Title>Success!</Title>
+      <p>
+        <Icon />
       </p>
-    </ContentWrapper>
+    </SuccessWrapper>
   );
 }
 
