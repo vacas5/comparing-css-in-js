@@ -1,26 +1,92 @@
 import { useReducer } from "react";
+import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as Briefcase } from "../../icons/briefcase.svg";
 import { ReactComponent as Users } from "../../icons/users.svg";
 import { ReactComponent as Question } from "../../icons/question.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import ControlWithLabel from "../ControlWithLabel/ControlWithLabel";
-import "./Form.css";
+
+const ORANGE = "#e37f3e";
+
+const ButtonNav = styled.nav`
+  background-color: #f8f6f7;
+`;
+
+const ButtonList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+`;
+
+const ButtonListItem = styled.li`
+  text-align: center;
+  margin: 16px 24px;
+`;
+
+const ButtonListButton = styled.button`
+  height: 40px;
+  vertical-align: middle;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+  border-radius: 4px;
+  background-color: ${(props) => props.active && "white"};
+  color: ${(props) => props.active && ORANGE};
+`;
+
+const StyledForm = styled.form`
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 540px;
+`;
+
+const SubmitButtonWrapper = styled.p`
+  text-align: right;
+  margin-top: 24px;
+`;
+
+const Button = styled.button`
+  background: #e37f3e;
+  color: white;
+  text-transform: uppercase;
+  padding: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 14px;
+`;
 
 const formTypes = [
   {
     type: "sales",
-    Icon: Briefcase,
+    Icon: styled(Briefcase)`
+      margin-right: 8px;
+    `,
     title: "Sales Support",
   },
   {
     type: "user",
-    Icon: Users,
+    Icon: styled(Users)`
+      margin-right: 8px;
+    `,
     title: "User Support",
   },
   {
     type: "else",
-    Icon: Question,
+    Icon: styled(Question)`
+      margin-right: 8px;
+    `,
     title: "Something Else",
   },
 ];
@@ -126,31 +192,27 @@ function Form() {
 
   return (
     <ContentWrapper>
-      <nav className="button-nav">
-        <ul className="button-list">
+      <ButtonNav>
+        <ButtonList>
           {formTypes.map(({ type, Icon, title }) => {
             return (
-              <li className="button-list-item" key={type}>
-                <button
+              <ButtonListItem key={type}>
+                <ButtonListButton
                   type="button"
-                  className={
-                    formType === type
-                      ? "button-list-button active"
-                      : "button-list-button"
-                  }
+                  active={formType === type}
                   onClick={() => {
                     dispatch({ type: "setFormType", value: type });
                   }}
                 >
-                  <Icon className="button-list-button-icon" />
+                  <Icon />
                   {title}
-                </button>
-              </li>
+                </ButtonListButton>
+              </ButtonListItem>
             );
           })}
-        </ul>
-      </nav>
-      <form className="form" onSubmit={handleSubmit}>
+        </ButtonList>
+      </ButtonNav>
+      <StyledForm onSubmit={handleSubmit}>
         <ControlWithLabel
           id="name"
           title="Name"
@@ -236,12 +298,10 @@ function Form() {
             onChange={handleChange}
           />
         </ControlWithLabel>
-        <p className="submit-button-wrapper">
-          <button className="button" type="submit">
-            Get in touch
-          </button>
-        </p>
-      </form>
+        <SubmitButtonWrapper>
+          <Button type="submit">Get in touch</Button>
+        </SubmitButtonWrapper>
+      </StyledForm>
     </ContentWrapper>
   );
 }
