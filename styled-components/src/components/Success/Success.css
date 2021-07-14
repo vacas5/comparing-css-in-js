@@ -1,0 +1,16 @@
+.success-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-title {
+  color: green;
+}
+
+.success-icon svg {
+  color: green;
+  width: 64px;
+  height: 64px;
+}
